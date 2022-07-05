@@ -1,21 +1,47 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "main.h"
 /**
-* main - print sum of multiples of 3 or 5 below 1024
-* Return: 0
+* print_times_table - print multiplication table up to n
+* @n: integer argument
 */
-int main(void)
+void print_times_table(int n)
 {
-int n;
-int sum;
-sum = 0;
-for (n = 0; n < 1024; n++)
+int row;
+int column;
+int product;
+if (n >= 0 && n <= 15)
 {
-if ((n % 3 == 0 || (n % 5 == 0))
+for (row = 0; row <= n; row++)
 {
-sum += n;
+for (column = 0; column <= n; column++)
+{
+product = (row * column);
+if (column == 0)
+_putchar('0' + product);
+else
+{
+_putchar(',');
+_putchar(' ');
+if (product <= 9)
+{
+_putchar(' ');
+_putchar(' ');
+_putchar('0' + product);
+}
+else if (product > 9 && product < 100)
+{
+_putchar(' ');
+_putchar('0' + (product / 10));
+_putchar('0' + (product % 10));
+}
+else if (product >= 100)
+{
+_putchar('0' + (product / 100));
+_putchar('0' + ((product / 10) % 10));
+_putchar('0' + (product % 10));
 }
 }
-printf("%d\n", sum);
-return (0);
+}
+_putchar('\n');
+}
+}
 }
