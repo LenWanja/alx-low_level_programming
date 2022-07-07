@@ -8,29 +8,29 @@
 void print_number(int n)
 {
 
-int d = 1, i = 0, ii = 0;
+unsigned int tens, digit, positive = n;
+double t_beg = 1;
 
+if (n == 0)
+_putchar('0');
+else
+{
 if (n < 0)
 {
+positive = n * -1;
 _putchar('-');
-n = -n;
 }
-while (n / d != 0)
+
+while (t_beg <= positive)
+t_beg *= 10;
+tens = t_beg / 10;
+
+while (tens >= 1)
 {
-d *= 10;
-i++;
+digit = positive / tens;
+_putchar(digit + '0');
+positive = (positive - (tens *digit));
+tens /= 10;
 }
-d = d / 10;
-
-while (ii < i)
-{
-_putchar('0' + n / d);
-n = n - (n / d) *d;
-d = d / 10;
-ii++;
 }
-
-if (i == 0)
-_putchar('0' + n);
-
 }
