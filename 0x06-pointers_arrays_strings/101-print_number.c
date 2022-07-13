@@ -8,22 +8,19 @@
 
 void print_number(int n)
 {
-int divisor = 1, i, resp;
+unsigned int n1;
+
+n1 = n;
 
 if (n < 0)
 {
 _putchar('-');
-n *= -1;
+n1 = -n;
 }
 
-for (i = 0; n / divisor > 9; i++, divisor *= 10)
-;
-
-for (; divisor >= 1; n %= divisor, divisor /= 10)
+if (n1 / 10 != 0)
 {
-resp = n / divisor;
-_putchar('0' + resp);
-
+print_number(n1 / 10);
 }
-
+_putchar((n1 % 10) + '0');
 }
