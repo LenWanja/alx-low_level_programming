@@ -20,6 +20,7 @@ while (haystack[i] != '\0') /* iterate through haystack */
 {
 /**
 * if a byte matches first char of needle
+* @needle: target substring to search for
 * interate through needle until match ends
 */
 if (haystack[i] == needle[0])
