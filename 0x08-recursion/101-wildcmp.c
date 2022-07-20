@@ -2,72 +2,41 @@
 #include <stdio.h>
 
 /**
- * wildcmp - check the code for Holberton School students.
+ * wildcmp - compare if string with wildcard martches
  * @s1: string
  * @s2: string
- * Return: Always 0.
+ * return: 1 if matched, 0 if not
  */
-
 int wildcmp(char *s1, char *s2)
 {
-return (checker(s1, s2, 0, 0, -1));
-}
-
-/**
- * checkLast - check last char of s2 when s1 ends
- * @s: string
- * @i: int
- * Return: 0 or 1
- */
-int checkLast(char *s, int i)
-{
-if (s[i] == '*')
-return (checkLast(s, i + 1));
-else if (s[i] == '\0')
+if (*s1 == '\0' && *s2 == '\0')
 return (1);
-
+if (*s1 == *s2)
+return (wildcmp(s1 + 1, s2 + 1));
+else if (*s2 == '*')
+return (substring_match(s1, (s2 + 1), (s2 + 1)));
+else
 return (0);
-
 }
 /**
- * checker - helper
+ * substring_match - check if a substring after wildcard matches s1
  * @s1: string
  * @s2: string
- * @a: int
- * @b: int
- * @wildUsed: int
- * Return: Always 0.
+ * @after_wldcd: Placeholder for position right after wildcard
+ * Return: 1 if matched, 0 if not
  */
-int checker(char *s1, char *s2, int a, int b, int wildUsed)
+int substring_match(char *s1, char *s2, char *after_wldcd)
 {
-
-if (s1[a] != '\0')
-{
-if (s2[b] == '\0')
-return (0);
-else if (s2[b] == '*')
-{
-if (s2[b + 1] == '*')
-return (checker(s1, s2, a, b + 1, b));
-else if (s2[b + 1] == s1[a])
-return (checker(s1, s2, a, b + 1, b));
-else if (s1[a + 1] != s2[b + 1])
-return (checker(s1, s2, a + 1, b, b));
-else if (s1[a + 1] == s2[b + 1])
-return (checker(s1, s2, a + 1, b + 1, b));
-}
-else if ((s1[a] == s2[b]) || (s2[b] == '*' && s2[b + 1] == s1[a + 1]))
-return (checker(s1, s2, a + 1, b + 1, wildUsed));
-
-if (wildUsed == -1)
-return (0);
-
-return (checker(s1, s2, a, wildUsed, wildUsed));
-
-}
-if (s2[b] != '\0')
-return (checkLast(s2, b));
-
+if (*s1 == '\0' && *s2 == '\0')
 return (1);
-
+if (*s1 == '\0' && *s2 == '*')
+return (substring_match(s1, s2 + 1, s2 + 1));
+if (*s1 == '\0' && *s2 != '\0')
+return (0);
+if (*s2 == '*')
+return (substring_match(s1, s2 + 1, s2 + 1));
+if (*s1 == *s2)
+return (substring_match(s1 + 1, s2 + 1, after_wldcd));
+else
+return (substring_match(s1 + 1, after_wldcd, after_wldcd));
 }
