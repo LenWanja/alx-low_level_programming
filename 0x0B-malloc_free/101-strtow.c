@@ -1,86 +1,51 @@
 #include "main.h"
 #include <stdlib.h>
-#include <stdio.h>
-
 /**
- * strtow - char
- * @str: pointer to string params
- * Return: char
+ * strtow - splits a string into words.
+ * @str: string to be splitted
+ * Return: pointer to an array of strings (words) or null
  */
-
 char **strtow(char *str)
 {
-int i = 0, j = 0, k = 0;
-int len = 0, count = 0;
-char **f, *col;
+	char **array;
+	int i = 0, j, m, l, k = 0, len = 0, words = 0;
 
-if (!str || !*str)
-{
-return (NULL);
-}
+	if (str == NULL || str[0] == '\0')
+		return (NULL);
+	for (i = 0; str[i] != '\0'; i++)
+		if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+			words++;
 
-while (*(str + i))
-{
-if (*(str + i) != ' ')
-{
-if (*(str + i + 1) == ' ' || *(str + i + 1) == 0)
-{
-count += 1;
-}
-}
-i++;
-}
-
-if (count == 0)
-{
-return (NULL);
-}
-count += 1;
-f = malloc(sizeof(char *) * count);
-
-if (!f)
-{
-return (NULL);
-}
-i = 0;
-
-while (*str)
-{
-while (*str == ' ' && *str)
-{
-str++;
-}
-len = 0;
-
-while (*(str + len) != ' ' && *(str + len))
-{
-len += 1;
-}
-len += 1;
-col = malloc(sizeof(char) * len);
-
-if (!col)
-{
-for (k = j - 1; k >= 0; k--)
-{
-free(f[k]);
-}
-free(f);
-return (NULL);
+	if (words == 0)
+		return (NULL);
+	array = malloc((words + 1) * sizeof(char *));
+	if (array == NULL)
+	{
+		free(array);
+		return (NULL);
+	}
+	for (i = 0; str[i] != '\0' &&  k < words; i++)
+	{
+		if (str[i] != ' ')
+		{
+			len = 0;
+			for (j = i; str[j] != ' ' && str[j] != '\0'; j++)
+				len++;
+			array[k] = malloc((len + 1) * sizeof(char));
+			if (array[k] == NULL)
+			{
+				for (m = 0; m < k; m++)
+					free(array[k]);
+				free(array);
+				return (NULL);
+			}
+			for (l = 0; l < len; l++, i++)
+				array[k][l] = str[i];
+			array[k][l] = '\0', k++;
+		}
+	}
+	array[k] = NULL;
+	return (array);
 }
 
-for (k = 0; k < (len - 1);  k++)
-{
-*(col + k) = *(str++);
-}
-*(col + k) = '\0';
-*(f + j) = col;
 
-if (j < (count - 1))
-{
-j++;
-}
-}
-*(f + j) = NULL;
-return (f);
-} /*yes*/
