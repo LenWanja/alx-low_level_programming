@@ -1,10 +1,10 @@
 #include <elf.h>
-#inlude "main.h"
-
-/*
- * File: 100-elf_header.c
- * Auth: Brennan D Baraban
- */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void check_elf(unsigned char *e_ident);
 void print_magic(unsigned char *e_ident);
